@@ -4,13 +4,13 @@ from datetime import datetime
 
 from model.qbs import Qb
 
-user_api = Blueprint('user_api', __name__,
-                   url_prefix='/api/users')
+user_api = Blueprint('qb_api', __name__,
+                   url_prefix='/api/qbs')
 
 # API docs https://flask-restful.readthedocs.io/en/latest/api.html
-api = Api(user_api)
+api = Api(qb_api)
 
-class UserAPI:        
+class QBAPI:        
     class _Create(Resource):
         def post(self):
             ''' Read data for json body '''
