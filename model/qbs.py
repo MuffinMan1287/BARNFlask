@@ -1,6 +1,5 @@
 """ database dependencies to support sqliteDB examples """
 from random import randrange
-from datetime import date
 import os, base64
 import json
 
@@ -12,10 +11,10 @@ from sqlalchemy.exc import IntegrityError
 
 # Define the Post class to manage actions in 'posts' table,  with a relationship to 'users' table
 class Make(db.Model):
-    __tablename__ = 'posts'
+    __tablename__ = 'stats'
 
     # Define the Notes schema
-    id = db.Column(db.Integer, db.ForeignKey('pys.id'), primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey('stats.id'), primary_key=True)
     note = db.Column(db.Text, unique=False, nullable=False)
     image = db.Column(db.String, unique=False)
     # Define a relationship in Notes Schema to userID who originates the note, many-to-one (many notes to one user)
@@ -36,7 +35,7 @@ class Make(db.Model):
 # -- b.) User represents data we want to store, something that is built on db.Model
 # -- c.) SQLAlchemy ORM is layer on top of SQLAlchemy Core, then SQLAlchemy engine, SQL
 class Qb(db.Model):
-    __tablename__ = 'freeagents'  # table name is plural, class name is singular
+    __tablename__ = '10qbs'  # table name is plural, class name is singular
 
     # Define the User schema with "vars" from object
     id = db.Column(db.Integer, primary_key=True)
@@ -45,16 +44,16 @@ class Qb(db.Model):
     _comps = db.Column(db.String(255), unique=False, nullable=False)
     _yards = db.Column(db.String(255), unique=False, nullable=False)
     _tds = db.Column(db.String(255), unique=False, nullable=False)
-
-    # Defines a relationship between User record and Notes table, one-to-many (one user to many notes)
+    _pimage = db.Column(db.String, unique=False)
 
     # constructor of a User object, initializes the instance variables within object (self)
-    def __init__(self, name, atts, comps, yards, tds):
+    def __init__(self, name, atts, comps, yards, tds, pimage):
         self._name = name    # variables with self prefix become part of the object, 
         self._atts = atts
         self._comps = comps
         self._yards = yards
         self._tds = tds
+        self._pimage = pimage
 
     # a name getter method, extracts name from object
     @property
@@ -71,7 +70,7 @@ class Qb(db.Model):
         return self._atts
     
     # a setter function, allows name to be updated after initial object creation
-    @name.setter
+    @atts.setter
     def atts(self, atts):
         self._atts = atts
 
@@ -80,7 +79,7 @@ class Qb(db.Model):
         return self._comps
     
     # a setter function, allows name to be updated after initial object creation
-    @name.setter
+    @comps.setter
     def comps(self, comps):
         self._comps = comps
 
@@ -89,7 +88,7 @@ class Qb(db.Model):
         return self._yards
     
     # a setter function, allows name to be updated after initial object creation
-    @name.setter
+    @yards.setter
     def yards(self, yards):
         self._yards = yards
 
@@ -101,6 +100,14 @@ class Qb(db.Model):
     @tds.setter
     def tds(self, tds):
         self._tds = tds
+
+    @property
+    def pimage(self):
+        return self._pimage
+    
+    @pimage.setter
+    def pimage(self, pimage):
+        self._pimage = pimage
     
     # output content using str(object) in human readable form, uses getter
     # output content using json dumps, this is ready for API response
@@ -128,12 +135,13 @@ class Qb(db.Model):
             "atts" : self.atts,
             "comps" : self.comps,
             "yards" : self.yards,
-            "tds": self.tds
+            "tds": self.tds,
+            "pimage": self.pimage
         }
 
     # CRUD update: updates user name, password, phone
     # returns self
-    def update(self, name, atts, comps, yards, tds):
+    def update(self, name, atts, comps, yards, tds, pimage):
         """only updates values with length"""
         if len(name) > 0:
             self.name = name
@@ -145,6 +153,8 @@ class Qb(db.Model):
             self.yards = yards
         if len(tds) > 0:
             self.tds = tds
+        if len(pimage) > 0:
+            self.pimage = pimage
         db.session.commit()
         return self
 
@@ -164,16 +174,23 @@ def initQbs():
     """Create database and tables"""
     db.create_all()
     """Tester data for table"""
-    p1 = Qb(name='Patrick Mahomes', atts='648', comps='435', yards='5250', tds='41')
-    p2 = Qb(name='Justin Herbert', atts='699', comps='477', yards='4739', tds='25')
-    p3 = Qb(name='Tom Brady', atts='733', comps='490', yards='4694', tds='25')
-    qbs = [p1, p2, p3]
+    p1 = Qb(name='Patrick Mahomes', atts='648', comps='435', yards='5250', tds='41', pimage='/images/pm')
+    p2 = Qb(name='Justin Herbert', atts='699', comps='477', yards='4739', tds='25', pimage='/images/jh')
+    p3 = Qb(name='Tom Brady', atts='733', comps='490', yards='4694', tds='25', pimage='/images/tb')
+    p4 = Qb(name='Kirk Cousins', atts='643', comps='424', yards='4547', tds='29', pimage='/images/kc')
+    p5 = Qb(name='Joe Burrow', atts='606', comps='414', yards='4475', tds='35', pimage='/images/jb')
+    p6 = Qb(name='Jared Goff', atts='587', comps='382', yards='4438', tds='29', pimage='/images/jg')
+    p7 = Qb(name='Josh Allen', atts='567', comps='359', yards='4283', tds='35', pimage='/images/ja')
+    p8 = Qb(name='Geno Smith', atts='572', comps='399', yards='4283', tds='30', pimage='/images/gs')
+    p9 = Qb(name='Trevor Lawrence', atts='584', comps='387', yards='4113', tds='25', pimage='/images/tl')
+    p10 = Qb(name='Jalen Hurts', atts='460', comps='306', yards='3701', tds='22', pimage='/images/gs')
+    qbs = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10]
     for qb in qbs:
         try:
             qb.create()
         except IntegrityError:
             '''fails with bad or duplicate data'''
             db.session.remove()
-            print(f"Records exist, duplicate email, or error: {user.name}")
+            print(f"Records exist, duplicate email, or error: {qb.name}")
 
             
