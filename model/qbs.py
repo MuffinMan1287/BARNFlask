@@ -35,7 +35,7 @@ class Make(db.Model):
 # -- b.) User represents data we want to store, something that is built on db.Model
 # -- c.) SQLAlchemy ORM is layer on top of SQLAlchemy Core, then SQLAlchemy engine, SQL
 class Qb(db.Model):
-    __tablename__ = '10qbs'  # table name is plural, class name is singular
+    __tablename__ = 'top10qbs'  # table name is plural, class name is singular
 
     # Define the User schema with "vars" from object
     id = db.Column(db.Integer, primary_key=True)
@@ -176,16 +176,16 @@ def initQbs():
         db.init_app(app)
         db.create_all()
         """Tester data for table"""
-        p1 = Qb(name='Patrick Mahomes', atts='648', comps='435', yards='5250', tds='41', pimage='/images/pm')
-        p2 = Qb(name='Justin Herbert', atts='699', comps='477', yards='4739', tds='25', pimage='/images/jh')
-        p3 = Qb(name='Tom Brady', atts='733', comps='490', yards='4694', tds='25', pimage='/images/tb')
-        p4 = Qb(name='Kirk Cousins', atts='643', comps='424', yards='4547', tds='29', pimage='/images/kc')
-        p5 = Qb(name='Joe Burrow', atts='606', comps='414', yards='4475', tds='35', pimage='/images/jb')
-        p6 = Qb(name='Jared Goff', atts='587', comps='382', yards='4438', tds='29', pimage='/images/jg')
-        p7 = Qb(name='Josh Allen', atts='567', comps='359', yards='4283', tds='35', pimage='/images/ja')
-        p8 = Qb(name='Geno Smith', atts='572', comps='399', yards='4283', tds='30', pimage='/images/gs')
-        p9 = Qb(name='Trevor Lawrence', atts='584', comps='387', yards='4113', tds='25', pimage='/images/tl')
-        p10 = Qb(name='Jalen Hurts', atts='460', comps='306', yards='3701', tds='22', pimage='/images/gs')
+        p1 = Qb(name='Patrick Mahomes', atts='648', comps='435', yards='5250', tds='41', pimage='/images/pm.png')
+        p2 = Qb(name='Justin Herbert', atts='699', comps='477', yards='4739', tds='25', pimage='/images/jh.png')
+        p3 = Qb(name='Tom Brady', atts='733', comps='490', yards='4694', tds='25', pimage='/images/tb.png')
+        p4 = Qb(name='Kirk Cousins', atts='643', comps='424', yards='4547', tds='29', pimage='/images/kc.png')
+        p5 = Qb(name='Joe Burrow', atts='606', comps='414', yards='4475', tds='35', pimage='/images/jb.png')
+        p6 = Qb(name='Jared Goff', atts='587', comps='382', yards='4438', tds='29', pimage='/images/jg.png')
+        p7 = Qb(name='Josh Allen', atts='567', comps='359', yards='4283', tds='35', pimage='/images/ja.png')
+        p8 = Qb(name='Geno Smith', atts='572', comps='399', yards='4283', tds='30', pimage='/images/gs.png')
+        p9 = Qb(name='Trevor Lawrence', atts='584', comps='387', yards='4113', tds='25', pimage='/images/tl.png')
+        p10 = Qb(name='Jalen Hurts', atts='460', comps='306', yards='3701', tds='22', pimage='/images/jhurts.png')
         qbs = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10]
         for qb in qbs:
             try:
