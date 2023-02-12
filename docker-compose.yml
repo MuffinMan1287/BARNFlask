@@ -1,10 +1,10 @@
 version: '3'
 services:
         web:
-                image: flask_barn_v222
+                image: flask_barn_v123
                 build: .
                 ports:
-                        - "8867:8086"
+                        - "8867:8867"
                 volumes:
                         - ./volumes:/volumes
                         - ./instance:/instance
