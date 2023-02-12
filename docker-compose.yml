@@ -4,7 +4,7 @@ services:
                 image: flask_barn_v222
                 build: .
                 ports:
-                        - "8282:8086"
+                        - "8867:8086"
                 volumes:
                         - ./volumes:/volumes
                         - ./instance:/instance
