@@ -4,7 +4,7 @@ services:
                 image: flask_barn_v891
                 build: .
                 ports:
-                        - "8924:8924"
+                        - "8953:8953"
                 volumes:
                         - ./volumes:/volumes
                         - ./instance:/instance
