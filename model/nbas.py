@@ -38,7 +38,7 @@ def init_comments():
       "Jamal", "LeBron is the goat fr 😘"
     ],
     [
-      "Dontavious", "LeBron lowk dogwater tbh"
+      "Dontavious", "LeBron is lowkey dogwater tbh"
     ],
   ]
 
