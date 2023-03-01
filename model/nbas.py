@@ -1,24 +1,52 @@
-import requests
+from sqlalchemy import Column, Integer, String
+from .. import db
 
-url = "https://nba-player-props-odds.p.rapidapi.com/api/v1/odds"
+class Comment(db.Model):
+  id = Column(Integer, primary_key=True)
+  _name = Column(String(255))
+  _body = Column(String(255))
+  
+  def __init__(self, name, body):
+    self._name = name
+    self._body = body
 
-headers = {
-    "X-RapidAPI-Host": "nba-player-props-odds.p.rapidapi.com",
-    "X-RapidAPI-Key": "0608f45064msh40e1e6383c4be53p176cf6jsn49eacc437480",
-    "Content-Type": "application/json"
-}
+  @property
+  def name(self):
+    return self._name
+  
+  @property
+  def body(self):
+    return self._body
 
-data = {
-    "player": "Marcus Smart"
-}
+  @body.setter
+  def body(self, comment: str):
+    self._body = comment
 
-response = requests.post(url, headers=headers, json=data)
+  def to_dict(self):
+    return {
+      "id": self.id,
+      "name": self.name,
+      "body": self.body,
+    }
 
-if response.status_code == 200:
-    data = response.json()
-    print("Prop odds for player:", data["player"])
-    print("Points scored:", data["points"])
-    print("Rebounds:", data["rebounds"])
-    print("Assists:", data["assists"])
-else:
-    print("Failed to retrieve prop odds for player.")
+def init_comments():
+  if not len(db.session.query(Comment).all()) == 0:
+    return
+  
+  comments = [
+    [
+      "Jamal", "LeBron my goat fr 😘"
+    ],
+    [
+      "Dontavious", "LeBron lowk dogwater tbh"
+    ],
+  ]
+
+  comment_objects = [Comment(comment[0], comment[1]) for comment in comments]
+  for comment in comment_objects:
+    try:
+      db.session.add(comment)
+      db.session.commit()
+    except Exception as e:
+      print("error while creating comment: " + str(e))
+      db.session.rollback()
