@@ -35,7 +35,7 @@ def init_comments():
   
   comments = [
     [
-      "Jamal", "LeBron my goat fr 😘"
+      "Jamal", "LeBron is the goat fr 😘"
     ],
     [
       "Dontavious", "LeBron lowk dogwater tbh"
